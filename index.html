@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=830">
+<title>MDM Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+body{margin:0;background:#777;font:9pt/1.15 "Times New Roman","Noto Sans Devanagari","Mangal","Nirmala UI",serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.bar{position:fixed;top:0;left:0;right:0;z-index:9;background:#222;color:#fff;font:13px sans-serif;padding:6px 12px;display:flex;gap:10px;align-items:center}
+.bar b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar button{flex:none;padding:4px 12px;cursor:pointer;white-space:nowrap}.bar .pr{margin-left:auto;background:#fff;font-weight:700}
+#guide,#pw,#ri,#rc{position:fixed;inset:0;z-index:20;background:#000b;display:flex;align-items:center;justify-content:center;padding:12px}
+#guide[hidden],#pw[hidden],#ri[hidden],#rc[hidden]{display:none}
+.gbox{background:#fff;color:#111;width:min(680px,100%);max-height:100%;display:flex;flex-direction:column;border-radius:8px;font:14px/1.45 sans-serif;box-shadow:0 8px 30px #0008}
+.ghead{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #ddd;font-size:1.15em}
+.ghead button{border:0;background:none;font-size:1.2em;padding:4px 10px;cursor:pointer}
+.gbody{overflow:auto;padding:6px 16px}.gbody h3{margin:12px 0 4px;font-size:1em}.gbody p,.gbody li{margin:3px 0}.gbody ul{padding-left:18px;margin:4px 0}
+.gfoot{padding:10px 14px;border-top:1px solid #ddd;text-align:right}
+.gbtn{display:inline-block;background:#c00;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700}
+.gfoot .gbtn{border:0;font:inherit;font-weight:700;cursor:pointer}
+.gbtn.off{background:#999;cursor:default}.gbtn:not(.off) .soon{display:none}
+.inf{display:inline-block;position:relative;vertical-align:middle;width:7pt;height:7pt;margin-left:2pt;border:.6pt solid #9bb3d4;border-radius:50%;background:none;color:#9bb3d4;font:italic 700 5.5pt/6pt serif;text-align:center;padding:0;cursor:pointer}
+.inf:hover{color:#2563c9;border-color:#2563c9}
+.inf::before{content:"";position:absolute;inset:-8pt}
+#shb{position:fixed;inset:0;z-index:30;background:#000b;display:flex;align-items:center;justify-content:center;padding:12px}
+#shb[hidden]{display:none}#shb .gfoot button{margin-left:8px}
+#shb button:not(.lg),.shr{padding:6px 12px;cursor:pointer;border-radius:6px;border:1px solid #888;background:#fff;font:inherit;color:#111}
+#shy{background:#222!important;color:#fff!important;border-color:#222!important}
+body[data-share=on] .sh-off,body:not([data-share=on]) .sh-on{display:none}
+.gtop{padding:10px 14px 0}.mob{padding:4px 0;line-height:1.7}
+body[data-lang=hi] .en,body[data-lang=en] .hi{display:none}
+.lgs{display:flex;gap:4px;margin:0 8px}.lgs button{font-size:.85em;border:1px solid #888;border-radius:6px;padding:3px 10px;background:#fff;color:#111;cursor:pointer}
+body[data-lang=hi] .lg[data-set=hi],body[data-lang=en] .lg[data-set=en]{background:#222;color:#fff;border-color:#222}
+@media (pointer:coarse){.bar{font-size:24px;padding:10px 16px;gap:12px}.bar button{font-size:22px;padding:6px 16px}.sheet{margin-top:84px}.gbox{font-size:24px}}
+.sheet{width:210mm;height:297mm;margin:44px auto 12px;background:#fff;padding:34pt 0 0 51.5pt;overflow:hidden;box-shadow:0 2px 10px #0006}
+.p2{padding-top:38pt}
+table{border-collapse:collapse;table-layout:fixed}table+table{margin-top:-.6pt}
+td{border:.6pt solid #000;padding:0 1.5pt;text-align:center;vertical-align:middle;overflow:hidden;font-size:9pt}
+.l{text-align:left;padding-left:4pt}.b{font-weight:700}.g{background:#ededed}.h{line-height:1.15}.t8{font-size:8pt}
+input,textarea{border:0;background:transparent;font:inherit;color:#0a0a8a;text-align:center;outline:0;min-width:0}
+input:focus,textarea:focus{background:#fff6b8}
+.i{position:relative;padding:0}.i input{position:absolute;inset:0;width:100%;height:100%;padding:0}
+.it input{padding:0 8pt 0 0}
+.u{position:absolute;right:1.5pt;top:50%;transform:translateY(-50%);font-size:6.5pt;color:#555;pointer-events:none}
+.it{cursor:pointer;user-select:none}.it input{pointer-events:none}
+.rs{display:none}tr.hol .rs{display:table-cell}tr.hol .c{display:none}
+@media screen{.off{background:repeating-linear-gradient(45deg,#d6d6d6 0 3px,#b4b4b4 3px 6px)}}
+@media print{.off::after{content:"-";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9pt;color:#000}}
+.sn{cursor:pointer;user-select:none}tr.hol .sn{background:#000;color:#fff}
+tr.hol input{color:#000}
+.lab{text-align:left;padding:0 4pt;font-size:9.5pt}
+.f{display:flex;align-items:center;gap:3pt}.f input{flex:1;height:100%;text-align:left}
+.v{position:relative;padding:0}.v span{position:absolute;left:4pt;top:1pt;font-size:9.5pt;pointer-events:none}
+.v textarea{position:absolute;inset:0;width:100%;height:100%;resize:none;overflow:hidden;text-align:left;padding:1pt 4pt;line-height:12pt}
+.top{display:flex;justify-content:space-between;width:491.5pt;height:11pt;font-size:8pt;padding:0 12pt}
+.ttl{background:#000;color:#fff;font-weight:700;font-size:11.5pt}
+.red{color:#e00000;font-weight:700}
+@keyframes bl{0%,100%{background:transparent}50%{background:#ffd43b}}
+.blink{animation:bl .45s ease-in-out 3}
+input[readonly][data-p=a13]{cursor:pointer}
+@media screen{.i input.bad{background:#ffd6d6}}
+.my{display:inline-flex;gap:4pt}.my select{border:0;background:transparent;font:inherit;color:#0a0a8a;appearance:none;outline:0;cursor:pointer;padding:0;text-align:center}
+@media screen{.my select{border-bottom:1px dotted #999}}input[readonly]{cursor:default}
+.i select{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;font:inherit;font-size:8pt;color:#0a0a8a;text-align-last:center;appearance:none;outline:0}
+.cert{text-align:left;vertical-align:top;padding:2pt 4pt;font-size:7.6pt;line-height:10pt}
+.cert input,.cert select{display:inline-block;height:9pt;border:0;border-bottom:.6pt dotted #000;font:inherit;font-size:7.6pt;color:#0a0a8a;text-align:center;text-align-last:center;vertical-align:baseline;appearance:none;background:transparent}
+@media print{.bar,#guide,#pw,#ri,#rc,#shb,.inf{display:none!important}body{background:none}.sheet{margin:0;box-shadow:none;break-after:page}.sheet:last-child{break-after:auto}.u:empty{display:none}input,textarea,select,.cert input,.cert select{color:#000}}
+</style></head><body data-lang="hi">
+<div class="bar"><b>MDM UC</b><button onclick="openGuide()">📖 Guide</button><button onclick="resetAll()">Reset</button><button class="pr" onclick="doPrint()">🖨 Print / PDF</button></div>
+<div id="guide" hidden><div class="gbox" role="dialog" aria-modal="true" aria-labelledby="gt">
+<div class="ghead"><b id="gt" class="hi">इस टूल का उपयोग कैसे करें</b><b class="en">How to use this tool</b><span class="lgs"></span><button id="gx" aria-label="Close">✕</button></div>
+<div class="gtop"><a id="gv" class="gbtn off" target="_blank" rel="noopener noreferrer"><span class="hi">▶ वीडियो वॉकथ्रू देखें</span><span class="en">▶ Watch video walkthrough</span> <span class="soon"><span class="hi">(जल्द उपलब्ध)</span><span class="en">(coming soon)</span></span></a></div>
+<div class="gbody hi">
+<h3>1. शुरुआत</h3><p>पेज 1 के ऊपर (या पेज 2 के सेक्शन 1 में) महीना और साल चुनें। दोनों तालिका की तारीखों से अपने-आप जुड़े रहते हैं। रविवार अपने-आप छुट्टी के रूप में चिह्नित हो जाते हैं।</p>
+<h3>2. स्कूल और कुक की जानकारी</h3><p>इन्हें एक बार भरें। स्कूल, बैंक, नामांकन, फ़ोन नंबर और कुक कम हेल्पर की जानकारी इसी डिवाइस पर याद रखी जाती है। बाकी सब कुछ (तालिका की संख्याएँ, दरें) <b>कभी सेव नहीं होता</b>, इसलिए पेज बंद करने से पहले प्रिंट करें या PDF सेव करें।</p>
+<h3>3. रोज़ की तालिका</h3><ul>
+<li>हर दिन के लिए कक्षा 1–5 और 6–8 के छात्रों की संख्या लिखें। गेहूं, चावल और दूध पाउडर अपने-आप निकल आते हैं (1 किलो से कम ग्राम में, उससे अधिक किलो में)। गणना वाले खाने बदले नहीं जा सकते।</li>
+<li><b>छुट्टी:</b> क्र.सं. पर टैप करें। वह काला हो जाता है और पूरी पंक्ति एक खाने में बदल जाती है जिसमें कारण लिख सकते हैं। दोबारा टैप करने पर वापस हो जाता है; लिखा हुआ कुछ नहीं मिटता।</li>
+<li><b>सामग्री नहीं बनी:</b> उस सामग्री के खाने पर टैप करें, वह उस दिन के लिए रद्द हो जाएगी (स्क्रीन पर धारीदार, प्रिंट में "-")। कक्षा 1–5 में रद्द करने पर 6–8 में भी रद्द होती है।</li>
+<li>सर्वयोग और दिनों की संख्या वाली पंक्तियाँ हर कॉलम का जोड़ निकालती हैं।</li></ul>
+<h3>4. पेज 2</h3><ul>
+<li>दरें पहले से भरी हैं। इस सत्र के लिए बदल सकते हैं, पर पेज दोबारा खोलने पर वे पुरानी हो जाती हैं।</li>
+<li>दरों के नाम वाले खानों (जैसे कन्वर्जन दर) में छोटा हल्का <b>ⓘ</b> आइकन है। उसे दबाकर देखें कि दरें कब अपडेट हुई थीं। दरें अंतिम बार अपडेट: <b class="rd"></b>।<span class="rurl"> नवीनतम मान के लिए यहाँ जाएँ: <a class="ru" target="_blank" rel="noopener noreferrer"></a></span></li>
+<li>सेक्शन 1: लाभार्थी और राशि तालिका से अपने-आप बनती हैं। ईंधन व्यय भरें। दुग्ध लाभार्थी की संख्या तभी बदलें जब वह अलग हो।</li>
+<li>सेक्शन 2: शेष, प्राप्ति और पिछला व्यय भरें। इस माह का व्यय तालिका से आता है; कुल और अंतिम शेष अपने-आप बनते हैं।</li>
+<li>सेक्शन 4: हर कुक का नाम, श्रेणी और 12 अंकों का आधार नंबर भरें (डैश अपने-आप लग जाते हैं)। कुक की संख्या और श्रेणीवार संख्या अपने-आप बदलती है। कुक की संख्या पर टैप करने पर नाम वाला हिस्सा चमकता है।</li>
+<li>बाकी संख्याएँ, तारीखें, अग्रिम और प्रमाणपत्र की खाली जगहें ज़रूरत के अनुसार भरें।</li></ul>
+<h3>5. जान-बूझकर खाली छोड़ा गया</h3><p>कार्यालय द्वारा पारित राशि, लाल स्याही वाला बकाया खाना, विद्यालय सील का डिब्बा और छपे हुए नोट प्रिंट के बाद हाथ से भरने के लिए हैं।</p>
+<h3>6. प्रिंट / PDF</h3><p><b>🖨 Print / PDF</b> दबाएँ, पेपर A4, मार्जिन None, स्केल 100% चुनें और "Background graphics" चालू करें।</p>
+<div class="mob hi"></div>
+<h3>सुझाव</h3><ul><li>Tab दबाने पर कर्सर 1–5 के कॉलम में नीचे जाता है, फिर 6–8 में। Enter दबाने पर खाना छूट जाता है।</li><li><b>Reset</b> तालिका साफ़ करता है पर सेव की गई जानकारी रखता है।</li></ul>
+<h3>📴 ऑफ़लाइन इस्तेमाल</h3><p>इस पेज को डाउनलोड करके बिना इंटरनेट के भी चला सकते हैं:</p><ul>
+<li>💻 <b>कंप्यूटर (Chrome / Edge / Firefox):</b> <b>Ctrl + S</b> (Mac पर <b>⌘ + S</b>) दबाएँ, “Webpage, Complete” या “Webpage, HTML only” चुनकर सेव करें। बाद में उस फ़ाइल पर डबल-क्लिक करके खोलें।</li>
+<li>🤖 <b>Android (Chrome):</b> <b>⋮</b> मेनू में <b>⬇ Download</b> दबाएँ, फिर <b>⋮ → Downloads</b> से खोलें।</li>
+<li>🍎 <b>iPhone / iPad (Safari):</b> <b>Share ⬆</b> → <b>Options</b> → <b>Web Archive</b> चुनें, फिर <b>Save to Files</b> दबाएँ।</li></ul>
+<p>⚠️ सेव की गई कॉपी में नई दरें अपने-आप नहीं आतीं, इसलिए समय-समय पर दोबारा डाउनलोड करें। ऑफ़लाइन होने पर फ़ॉन्ट थोड़ा अलग दिख सकता है। सेव की गई जानकारी हर ब्राउज़र में अलग रहती है। अगर किसी फ़ोन पर कॉपी में टाइप नहीं हो पाता, तो कंप्यूटर या दूसरा ब्राउज़र आज़माएँ।</p>
+<div class="shsec"><h3>🤝 डेवलपर से सहायता</h3><p>आप चाहें तो अपने स्कूल का नाम, ग्राम पंचायत, ब्लॉक, संस्था प्रधान का नंबर और WhatsApp नंबर डेवलपर के साथ साझा कर सकते हैं, ताकि कोई दिक्कत होने पर वे आपसे संपर्क कर सकें। आधार, बैंक या अन्य जानकारी कभी नहीं भेजी जाती। बंद करने पर आगे कुछ नहीं भेजा जाएगा।</p>
+<button class="shr"><span class="sh-on">✅ चालू है — बंद करें</span><span class="sh-off">⬜ बंद है — चालू करें</span></button></div>
+</div>
+<div class="gbody en">
+<h3>1. Start</h3><p>Pick the month and year at the top of page 1 (or in section 1 of page 2). Both stay in sync with the dates in the table. Sundays are marked as holidays automatically.</p>
+<h3>2. School and cook details</h3><p>Fill these once. School, bank, enrolment, phone numbers and the cook-cum-helper details are remembered on this device. Everything else (table values, rates) is <b>never saved</b>, so print or save the PDF before closing the page.</p>
+<h3>3. Daily table</h3><ul>
+<li>Type the number of students for each day, for classes 1–5 and 6–8. Wheat, rice and milk powder are calculated automatically (shown in g, or kg from 1 kg up). Calculated cells can't be edited.</li>
+<li><b>Holiday:</b> tap the serial number. It turns black and the row becomes one cell where you can type the reason. Tap again to undo; nothing you typed is lost.</li>
+<li><b>Item not served:</b> tap that ingredient's cell to cancel it for the day (hatched on screen, "-" when printed). Cancelling for classes 1–5 also cancels it for 6–8.</li>
+<li>The सर्वयोग and दिनों की संख्या rows total each column.</li></ul>
+<h3>4. Page 2</h3><ul>
+<li>Rates (दर) are filled in. You can change one for this session, but it resets when the page reloads.</li>
+<li>Each rate's name cell (such as कन्वर्जन दर) has a small, faint <b>ⓘ</b> icon. Tap it to see when the rates were last updated. Rates last updated: <b class="rd"></b>.<span class="rurl"> For the latest values, go to: <a class="ru" target="_blank" rel="noopener noreferrer"></a></span></li>
+<li>Section 1: beneficiaries and amounts calculate from the table. Enter the fuel expense. Change the milk beneficiary number only if it differs.</li>
+<li>Section 2: enter opening balance, receipts and earlier spending. This month's spending comes from the table; totals and closing balance calculate.</li>
+<li>Section 4: enter each cook's name, category and 12-digit Aadhaar number (dashes are added for you). The cook count and category counts update on their own. Tap the cook count to make the names flash.</li>
+<li>Fill the remaining counts, dates, advances and certificate blanks where needed.</li></ul>
+<h3>5. Left blank on purpose</h3><p>The office-approved amount, the red-ink dues cell, the school seal box and the printed notes are for filling by hand after printing.</p>
+<h3>6. Print / PDF</h3><p>Tap <b>🖨 Print / PDF</b>, choose paper A4, margins None, scale 100%, and turn on "Background graphics".</p>
+<div class="mob en"></div>
+<h3>Tips</h3><ul><li>Tab moves down the 1–5 student column, then the 6–8 column. Enter leaves a cell.</li><li><b>Reset</b> clears the table but keeps your saved details.</li></ul>
+<h3>📴 Use it offline</h3><p>You can download this page and use it without internet:</p><ul>
+<li>💻 <b>Computer (Chrome / Edge / Firefox):</b> press <b>Ctrl + S</b> (<b>⌘ + S</b> on Mac), choose “Webpage, Complete” or “Webpage, HTML only”, and save. Later, double-click the saved file to open it.</li>
+<li>🤖 <b>Android (Chrome):</b> tap the <b>⋮</b> menu, then <b>⬇ Download</b>. Open it later from <b>⋮ → Downloads</b>.</li>
+<li>🍎 <b>iPhone / iPad (Safari):</b> tap <b>Share ⬆</b> → <b>Options</b> → <b>Web Archive</b>, then <b>Save to Files</b>.</li></ul>
+<p>⚠️ A saved copy won't get new rates by itself, so download it again from time to time. Fonts may look slightly different offline. Saved details stay inside each browser separately. If a copy doesn't let you type on your phone, try a computer or another browser.</p>
+<div class="shsec"><h3>🤝 Help from the developer</h3><p>If you like, you can share your school name, gram panchayat, block, head/in-charge number and WhatsApp number with the developer so they can contact you if something goes wrong. Aadhaar, bank and other details are never sent. Turning it off stops anything further from being sent.</p>
+<button class="shr"><span class="sh-on">✅ On — turn off</span><span class="sh-off">⬜ Off — turn on</span></button></div>
+</div>
+</div></div>
+<div id="pw" hidden><div class="gbox" role="dialog" aria-modal="true">
+<div class="ghead"><b class="hi">फ़ोन पर अगला कदम</b><b class="en">Next step on phones</b><span class="lgs"></span><button id="px" aria-label="Close">✕</button></div>
+<div class="gbody"><div class="mob hi"></div><div class="mob en"></div></div>
+<div class="gfoot"><button id="pgo" class="gbtn"><span class="hi">आगे बढ़ें ▶</span><span class="en">Continue ▶</span></button></div>
+</div></div>
+<div id="ri" hidden><div class="gbox" role="dialog" aria-modal="true">
+<div class="ghead"><b class="hi">दरों की जानकारी</b><b class="en">About the rates</b><span class="lgs"></span><button id="rx" aria-label="Close">✕</button></div>
+<div class="gbody"><p class="hi">🗓 दरें अंतिम बार अपडेट की गईं: <b class="rd"></b></p><p class="en">🗓 Rates last updated: <b class="rd"></b></p>
+<p class="rurl hi">🔗 नवीनतम मान देखने के लिए यहाँ जाएँ: <a class="ru" target="_blank" rel="noopener noreferrer"></a></p>
+<p class="rurl en">🔗 To get the latest values, go to: <a class="ru" target="_blank" rel="noopener noreferrer"></a></p></div>
+</div></div>
+<div id="shb" hidden><div class="gbox" role="alertdialog" aria-modal="true" aria-labelledby="sht">
+<div class="ghead"><b id="sht" class="hi">डेवलपर से सहायता</b><b class="en">Help from the developer</b><span class="lgs"></span></div>
+<div class="gbody"><p class="hi">🤝 क्या आप चाहते हैं कि डेवलपर ज़रूरत पड़ने पर आपकी मदद कर सके? “हाँ” दबाने पर आपके स्कूल का नाम, ग्राम पंचायत, ब्लॉक, संस्था प्रधान का नंबर और WhatsApp नंबर डेवलपर तक (Microsoft Clarity के ज़रिए) पहुँचेंगे, ताकि कोई दिक्कत होने पर वे आपसे संपर्क कर सकें। आधार, बैंक या अन्य जानकारी कभी नहीं भेजी जाती। इसे बाद में गाइड में बदल सकते हैं।</p>
+<p class="en">🤝 Want the developer to be able to help you if something goes wrong? If you tap “Yes”, your school name, gram panchayat, block, head/in-charge number and WhatsApp number are shared with the developer (through Microsoft Clarity) so they can contact you. Aadhaar, bank and other details are never sent. You can change this later in the guide.</p></div>
+<div class="gfoot"><button id="shn"><span class="hi">नहीं</span><span class="en">No thanks</span></button><button id="shy"><span class="hi">हाँ, साझा करें</span><span class="en">Yes, share</span></button></div>
+</div></div>
+<div id="rc" hidden><div class="gbox" role="alertdialog" aria-modal="true">
+<div class="ghead"><b class="hi">टेबल रीसेट करें?</b><b class="en">Reset the table?</b><span class="lgs"></span></div>
+<div class="gbody"><p class="hi">तालिका की सभी संख्याएँ और दरें साफ़ हो जाएँगी। आपके सेव किए गए स्कूल और कुक के विवरण बने रहेंगे (इसलिए कुक की संख्या और उससे बनी राशि दिखती रह सकती है)।</p>
+<p class="en">This clears all table values and rates. Your saved school and cook details stay (so the cook count and the amounts based on it may still show).</p></div>
+<div class="gfoot"><button id="rcn"><span class="hi">रद्द करें</span><span class="en">Cancel</span></button><button id="rcy" class="gbtn"><span class="hi">रीसेट करें</span><span class="en">Reset</span></button></div>
+</div></div>
+<main id="app"></main>
+<script>
+/* ============ CONFIG — dev edits here ============ */
+const RATES={c1:5.45,c2:0.378,c3:8.17,c4:0.459,c14:2003,c17:500}; // c14 = payable per cook-cum-helper, c17 = Bal Gopal extra honorarium (flat) // दर: cols 2,5,8,11 of page-2 section 1 (users may override per session only)
+const RATES_UPDATED='1 April 2023'; // when the दर above were last updated (shown in the ⓘ popup and in the guide)
+const RATES_URL=''; // where users can get the latest values, e.g. 'https://example.gov.in/rates' (shown in the ⓘ popup and the guide; leave empty to hide)
+const GRAMS={w1:100,r1:100,m1:15,w2:150,r2:150,m2:20}; // grams per student: wheat/rice/milk, class 1-5 (1) and 6-8 (2)
+// Month names shown in both month fields come from the HI array below (swap in English names if preferred).
+const EFFECTIVE_FROM='1 April 2023'; // shown at the very top-left of page 1 as "<date> से प्रभावी"
+const WALKTHROUGH_URL=''; // YouTube walkthrough link, e.g. 'https://youtu.be/XXXXXXXXXXX'. Leave empty to hide the button in the guide.
+const CLARITY_ID='yv44jepavp'; // Microsoft Clarity project ID. Leave empty to turn analytics off.
+const SHARE_TAGS={school:'school',gp:'gram_panchayat',block:'block',mob:'head_mobile',wa:'whatsapp'}; // fields sent to Clarity as tags ONLY if the user taps Yes in the support prompt. Key = field id, value = Clarity tag name.
+const STORE='mdm_uc_meta_v1';
+const SAVEP=/^s4[nca]\d$/; // page-2 fields remembered on this device: cook-cum-helper name / category / Aadhaar
+/* ================================================= */
+const $=(s,r=document)=>r.querySelector(s),KEYS=['b1','w1','r1','m1','b2','w2','r2','m2'];
+const HI=['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'];
+const MN=[['जन','jan'],['फर','feb'],['मार','mar'],['अप्र','apr'],['मई','may'],['जून','jun'],['जुल','jul'],['अग','aug'],['सित','sep'],['अक्','oct'],['नव','nov'],['दिस','dec']];
+const PAIRS=[['a13','c14','a15'],['a1','c1','a3'],['a4','c2','a6'],['a7','c3','a9'],['a10','c4','a12']];
+const p2=n=>('0'+n).slice(-2),fd=d=>`${p2(d.getDate())}/${p2(d.getMonth()+1)}/${d.getFullYear()}`;
+const T=(w,b)=>`<table style="width:${w.reduce((a,x)=>a+x)}pt"><colgroup>${w.map(x=>`<col style="width:${x}pt">`).join('')}</colgroup>${b}</table>`;
+const R=(h,c)=>`<tr style="height:${h}pt">${c}</tr>`;
+const F=(t,id,h,x='')=>`<td class="lab"><div class="f" style="height:${h}pt"><span>${t}</span><input id="${id}" ${x}></div></td>`;
+const MY=id=>`<span class="my" id="${id}"><select data-my="m">${HI.map((m,i)=>`<option value="${i}">${m}</option>`).join('')}</select><select data-my="y">${Array.from({length:28},(_,i)=>`<option>${2023+i}</option>`).join('')}</select></span>`;
+const V_=(t,id,x='')=>`<td class="v"><span>${t}</span><textarea id="${id}" class="sv" ${x}></textarea></td>`;
+
+/* ---------- page 1 ---------- */
+let h1=`<div class="top"><span>${EFFECTIVE_FROM} से प्रभावी</span><span>सभी कॉलम की पूर्ति आवश्यक रूप से करें</span></div>`;
+h1+=T([491.5],R(18.3,`<td class="ttl">मिड डे मील योजना का मासिक उपयोगिता प्रमाण पत्र</td>`));
+h1+=T([339.6,151.9],R(15.8,`<td class="lab"><div class="f" style="height:15.8pt"><span>कक्षा 1 से 5 तथा 6 से 8 का पोषाहार मानदेय का बिल माह</span>${MY('top')}</div></td>`+F('MDM कोड :','mdm',15.8,'class="sv"')));
+h1+=T([243.5,129.4,118.6],R(31.1,V_('विद्यालय का नाम :','school')+V_('ग्राम पंचायत :','gp')+V_('ब्लॉक :','block')));
+h1+=T([199.7,139.9,151.9],R(31.2,V_('बैंक का नाम / पता :','bank')+V_('खाता संख्या :','acc')+V_('IFSC कोड :','ifsc','data-u maxlength="11"')));
+h1+=T([169.1,117.2,205.2],R(17.3,`<td class="lab">इस माह का विद्यालय नामांकन ➔</td>`+F('कक्षा 1 से 5 :','en1',17.3,'class="sv" data-n')+F('कक्षा 6 से 8 :','en2',17.3,'class="sv" data-n')));
+h1+=T([286.3,205.2],R(15.8,F('संस्था प्रधान / पोषाहार प्रभारी मोबाइल :','mob',15.8,'class="sv" data-n maxlength="10"')+F('वाट्सएप्प नंबर :','wa',15.8,'class="sv" data-n maxlength="10"')));
+const cons='<td class="g h">गेहूं की<br>खपत</td><td class="g h">चावल की<br>खपत</td><td class="g h">दुग्ध<br>पाउडर</td>';
+const ben='<td rowspan="3" class="g h">पोषाहार से<br>लाभान्वित<br>छात्र संख्या</td>';
+let b=R(13.9,`<td rowspan="3" class="g h">क्र.सं.</td><td rowspan="3" class="g h">दिनांक</td>${ben}<td colspan="3" class="g h">कक्षा 1 से 5 (ग्राम / प्रति छात्र)</td>${ben}<td colspan="3" class="g h">कक्षा 6 से 8 (ग्राम / प्रति छात्र)</td>`);
+b+=R(13.8,`<td colspan="2" class="g">${GRAMS.w1} ग्राम</td><td class="g">${GRAMS.m1} ग्राम</td><td colspan="2" class="g">${GRAMS.w2} ग्राम</td><td class="g">${GRAMS.m2} ग्राम</td>`);
+b+=R(27.1,cons+cons);
+const cell=(k,g)=>k[0]=='b'?`<td class="i c ${g}"><input data-k="${k}" inputmode="numeric"></td>`:`<td class="i c it ${g}" data-t="${k}"><input data-k="${k}" readonly tabindex="-1"><span class="u"></span></td>`;
+for(let i=0;i<31;i++){const g=i%2?'':'g';b+=`<tr data-i="${i}" style="height:15.8pt"><td class="g sn">${i+1}.</td><td class="i ${g}"><input data-k="d" data-ym></td>${KEYS.map(k=>cell(k,g)).join('')}<td class="i rs ${g}" colspan="8"><input data-k="rs"></td></tr>`}
+b+=R(13.9,`<td colspan="2" class="l b">सर्वयोग :</td>`+KEYS.map(k=>`<td class="i"><input readonly tabindex="-1" data-s="${k}"><span class="u"></span></td>`).join(''));
+b+=R(13.8,`<td colspan="2" class="l b">दिनों की संख्या :</td>`+KEYS.map(k=>`<td class="i g"><input readonly tabindex="-1" data-n="${k}"></td>`).join(''));
+h1+=T([36.5,56.6,53.3,46.6,46.6,46.7,53.3,53.3,46.5,52.1],b);
+
+/* ---------- page 2 : section 1 ---------- */
+const hA=['पोषाहार<br>लाभार्थी 1 से 5','कन्वर्जन<br>दर','राशि<br>(1X2)','दुग्ध<br>लाभार्थी','चीनी<br>दर','राशि<br>(4X5)','पोषाहार<br>लाभार्थी 6 से 8','कन्वर्जन<br>दर','राशि<br>(7X8)','दुग्ध<br>लाभार्थी','चीनी दर','राशि<br>(10X11)'];
+const INF='<button class="inf" tabindex="-1" onclick="openRI()" aria-label="Rates info">i</button>';
+const RO='readonly tabindex="-1"',DC='data-dc inputmode="decimal"',DG='data-dg inputmode="numeric"';
+const P=(k,x='',c='')=>`<td class="i ${c}"><input data-p="${k}" ${x}></td>`;
+const PK=['a1','c1','a3','a4','c2','a6','a7','c3','a9','a10','c4','a12'];
+let h2=T([492.8],R(11.6,`<td class="b" style="font-size:8.5pt"><div class="f" style="justify-content:center;height:11pt">1. माह ${MY('mon')} हेतु भुगतान योग्य राशि का विवरण</div></td>`));
+h2+=T([59.8,46.5,31.1,35.6,33.3,28.9,57.7,33.3,40,48.8,40.5,37.3],
+ R(22.7,hA.map((t,k)=>`<td class="g h t8">${[1,4,7,10].includes(k)?t+INF:t}</td>`).join(''))+R(11.6,hA.map((_,k)=>`<td class="g">${k+1}</td>`).join(''))+
+ R(13.7,PK.map(k=>`<td class="i ${k[0]=='c'?'b g':''}"><input data-p="${k}" ${['a1','a3','a6','a7','a9','a12'].includes(k)?RO:k[0]=='c'?DC:k=='a4'||k=='a10'?DG:''}></td>`).join('')));
+/* ---------- page 2 : remaining sections ---------- */
+const nums=(a,z)=>Array.from({length:z-a+1},(_,k)=>`<td class="g">${a+k}</td>`).join(''),H=t=>`<td class="g h t8">${t}</td>`;
+const SEC=(t,h=11.6)=>T([492.8],R(h,`<td class="b g" style="font-size:8.5pt;line-height:1">${t}</td>`));
+const sub=(t,c='')=>`<td rowspan="2" class="i ${c}">`;
+/* block B (cols 13-19). Col 19 = office use, intentionally blank */
+const hB=['कुक कम हेल्पर<br>की संख्या','भुगतान<br>योग्य राशि','कुक कम हेल्पर की<br>राशि (13X14)','ईंधन<br>व्यय','दूध गर्म करने<br>हेतु मानदेय','कॉलम संख्या<br>3+6+9+12+15+16+17 का योग','कार्यालय द्वारा भुगतान योग्य<br>पारित राशि'];
+h2+=T([59.8,46.5,73.3,30,60,110,113.2],R(22.7,hB.map((t,k)=>H(k==1?t.replace('<br>',INF+'<br>'):k==4?t+INF:t)).join(''))+R(11.6,nums(13,19))+R(13.8,P('a13',RO)+P('c14',DC,'b')+P('a15',RO)+P('a16',DC)+P('c17',DC,'b')+P('a18',RO)+'<td></td>'));
+/* section 2 : foodgrain (kg) */
+const h2h=['कक्षा','खाद्यान्न','<span id="kd" style="font-size:6pt"></span><br>को शेष','से गत<br>माह तक<br>प्राप्त','सरकार<br>से माह के<br>दौरान<br>प्राप्त','अन्य<br>स्त्रोत से<br>प्राप्त','राशन डीलर से<br>उधार लिया(+)<br>व दिया (-)','कुल (3+4<br>+5+6+7 का)<br>योग','से गत<br>माह तक<br>व्यय','माह के<br>दौरान<br>व्यय','कुल<br>(9+10)<br>का योग','माह के<br>अंत में<br>शेष<br>(8-11)'];
+const RW={g1:['1 से 5','गेहूं'],g2:['1 से 5','चावल'],g3:['6 से 8','गेहूं'],g4:['6 से 8','चावल'],p1:['1 से 5','पाउडर'],p2:['6 से 8','पाउडर']};
+h2+=SEC('2. खाद्यान्न (मात्रा किलोग्राम में अंकित करें)',11.7);
+h2+=T([33,40.1,33.2,40.1,40,34.9,58.3,53.3,46.7,33.2,41.9,38.1],R(44.8,h2h.map(H).join(''))+R(9.4,Array.from({length:12},(_,k)=>`<td class="g" style="font-size:6pt">${k+1}</td>`).join(''))+
+ ['g1','g2','g3','g4','gt','p1','p2','pt'].map(r=>R(13.8,(RW[r]?`<td class="g t8">${RW[r][0]}</td><td class="g t8">${RW[r][1]}</td>`:`<td colspan="2" class="b g">योग :</td>`)+
+  [3,4,5,6,7,8,9,10,11,12].map(c=>P(r+'_'+c,RW[r]&&![8,10,11,12].includes(c)?(c==7?'data-dc':DC):RO)).join(''))).join(''));
+/* section 3 : category-wise beneficiaries */
+const ct4=['SC','ST','OTHER','TOTAL'];
+h2+=SEC('3. माह के दौरान श्रेणीवार लाभान्वित छात्र / छात्राओं / कुक कम हेल्परों की संख्या');
+h2+=T([33,40.1,33.2,40.1,40,46.6,59.9,40,79.9,80],
+ R(22.7,`<td colspan="4" class="g t8 h">माह के दौरान लाभान्वित छात्र/छात्राओं की<br>संख्या 1 से 5</td><td colspan="4" class="g t8 h">माह के दौरान लाभान्वित छात्र / छात्राओं की संख्या 6 से 8</td><td class="g t8 h">नियुक्त कुक कम<br>हेल्पर की श्रेणी</td><td class="g t8 h">कुक कम हेल्पर की<br>संख्या</td>`)+
+ R(13.9,[...ct4,...ct4].map(c=>`<td class="t8">${c}</td>`).join('')+`<td class="t8">SC</td>`+P('s3_ck_sc',RO))+
+ R(13.8,['1','2'].map(g=>['sc','st','ot','t'].map(c=>P(`s3_${g}_${c}`,c=='t'?RO:DG).replace('<td ','<td rowspan="2" ')).join('')).join('')+`<td class="t8">ST</td>`+P('s3_ck_st',RO))+
+ R(13.9,`<td class="t8">OTHER</td>`+P('s3_ck_ot',RO)));
+/* section 4 : cook-cum-helpers */
+h2+=SEC('4. कुक कम हेल्पर की सूचना',9.4);
+let s4=R(13.7,`<td class="t8 b">क्र.सं.</td><td class="b" style="font-size:9pt">कुक कम हेल्पर का नाम</td><td class="b" style="font-size:9pt">श्रेणी SC/ST/OBC/OTHER</td><td class="b" style="font-size:9pt">आधार कार्ड संख्या</td>`);
+for(let i=1;i<=5;i++){const g=i%2?'g':'';s4+=R(13.8,`<td class="t8">${i}.</td>`+P('s4n'+i,'',g)+`<td class="i ${g}"><select data-p="s4c${i}">${['','SC','ST','OBC','OTHER'].map(o=>`<option>${o}</option>`).join('')}</select></td>`+P('s4a'+i,'data-aad inputmode="numeric" maxlength="14" title="12-digit Aadhaar number"',g))}
+h2+=T([33,153.4,146.5,159.9],s4);
+/* sections 5 & 6. Red-ink cell and col 19 stay blank (hand-filled) */
+const lb=t=>`<td class="g lab" style="font-size:9pt">${t}</td>`,hd=t=>`<td rowspan="4" class="g" style="font-size:9.5pt;line-height:1.3">${t}</td>`,r2=s=>s.replace('<td ','<td rowspan="2" ');
+h2+=T([146.4,40,46.6,59.9,40,159.9],
+ R(11.5,`<td colspan="2" class="b g" style="font-size:8.5pt">5. अन्य सूचनायें</td><td colspan="4" class="b g" style="font-size:8.5pt">6. वित्तीय सूचना</td>`)+
+ R(9.4,`<td colspan="2" class="g" style="font-size:6pt">माह के दौरान किये गये निरीक्षण (संख्या में दर्शायें)</td>${hd('स्वीकृत<br>अग्रिम<br>राशि')}${hd('पूर्व की<br>बकाया<br>अग्रिम राशि')}${hd('कुल<br>अग्रिम<br>राशि')}<td rowspan="4" style="font-size:9pt;line-height:1.3">कुकिंग कन्वर्जन एवं कुक कम हेल्पर<br>का बकाया भुगतान (माह अंकित करें)<br><span class="red">नोट: (लाल स्याही से अंकित करें)</span></td>`)+
+ [['अधिकारियों द्वारा निरीक्षण :','s5_o'],['जनप्रतिनिधियों द्वारा निरीक्षण :','s5_p'],['एस.एम.सी सदस्यों द्वारा निरीक्षण :','s5_s']].map(([t,k])=>R(13.8,lb(t)+P(k,DG))).join('')+
+ R(27.1,lb('पेयजल सुविधा एवं वाटर टैंक की<br>अंतिम सफाई की दिनांक :')+P('s5_w','data-dt title="dd/mm/yyyy"')+r2(P('s6_s',DC))+r2(P('s6_p',DC))+r2(P('s6_t',RO))+'<td rowspan="2"></td>')+
+ R(13.8,lb('चिकित्सा जांच की तिथि :')+P('s5_m','data-dt title="dd/mm/yyyy"')));
+/* certification block */
+const dp=(k,w,x='')=>`<input data-p="${k}" style="width:${w}pt" ${x}>`;
+h2+=`<table style="width:492.8pt"><colgroup><col style="width:379.6pt"><col style="width:113.2pt"></colgroup><tr style="height:53.8pt"><td rowspan="2" class="cert" style="height:159.9pt">
+<div>1. प्रमाणित किया जाता है कि विद्यालय में पोषाहार निर्धारित मीन्यू के अनुसार वितरित किया जा रहा है तथा प्रति सप्ताह फल वितरित किये जा रहे हैं|</div>
+<div>2. प्रमाणित किया जाता है कि कुक कम हेल्पर संख्या ${dp('k2',28,RO)} को माह <select data-p="cm" style="width:84pt"><option></option>${HI.map(m=>`<option>${m}</option>`).join('')}</select> तक का भुगतान उनके बैंक खाते में कर दिया गया है |</div>
+<div>3. प्रमाणित किया जाता है कि विद्यालय में खाद्यान्न उपलब्ध नहीं होने पर राशन डीलर से ${dp('k3',30,DC)} किग्रा गेहूं चावल उधार लिये गये |</div>
+<div>4. प्रमाणित किया जाता है कि पोषाहार पकाने एवं वितरण व्यवस्था में गाइडलाइन के तहत पूर्ण सावधानी बरती जा रही है |</div>
+<div>6. माह के दौरान जनसहयोग से खाद्यान्न (यदि जनसहयोग से प्राप्त किया हो तो मात्रा अंकित करें गेहूं ${dp('k6w',24,DC)} चावल ${dp('k6r',24,DC)}</div>
+<div>7. माह के दौरान उत्सव भोज के रूप में लाभान्वित छात्र / छात्राओं की संख्या कक्षा 1 से 5 ${dp('k7a',28,DG)} कक्षा 6 से 8 ${dp('k7b',30,DG)}</div>
+<div>नोट : 1. राशन डीलर के अतिरिक्त किसी अन्य से लिया गया खाद्यान्न लौटाने योग्य नहीं होगा|</div>
+<div>2. उक्त प्रपत्र के सभी कॉलम की पूर्ति कर प्रतिमाह 5 तारीख तक भिजवाना सुनिश्चित करें|</div>
+<div>3. प्रत्येक विद्यालय में बाल गोपाल योजना हेतु 1 कुक कम हेल्पर को 500 रुपये प्रतिमाह का अतिरिक्त मानदेय भुगतान देय होगा |</div>
+<div>4. जिन विद्यालयों में पोषाहार बनता है, उन विद्यालयों में नामांकन 1 से 50 पर तीन माह में 1 सिलेंडर तथा 51 से 100 नामांकन पर दो माह में 1 सिलेंडर एवं 150 से अधिक नामांकन पर प्रतिमाह 1 सिलेंडर का पुनर्भरण किया जाएगा |</div>
+</td><td class="g" style="vertical-align:top;font-size:9.5pt;line-height:1.3;padding-top:2pt">पोषाहार प्रभारी के मोबाइल<br>नंबर :<input data-p="pm" data-dg maxlength="10" inputmode="numeric" style="display:block;width:100%;height:20pt;margin-top:4pt;font-size:10pt"></td></tr>
+<tr><td style="vertical-align:bottom;text-align:left;padding:0 4pt 3pt;font-size:9pt">प्रधानाध्यापक विद्यालय सील</td></tr></table>`;
+document.getElementById('app').innerHTML=`<section class="sheet">${h1}</section><section class="sheet p2">${h2}</section>`;
+
+/* ---------- state ---------- */
+const now=new Date(),TR=[...document.querySelectorAll('tr[data-i]')],PE={};
+document.querySelectorAll('[data-p]').forEach(e=>PE[e.dataset.p]=e);
+const newRows=()=>Array.from({length:31},()=>({h:null,rs:null,b1:'',b2:'',on:{w1:1,r1:1,m1:1,w2:1,r2:1,m2:1}}));
+const newV=()=>{const v={};for(const k in PE)v[k]=RATES[k]!=null?''+RATES[k]:'';return v};
+let S={y:now.getFullYear(),m:now.getMonth(),rows:newRows()},V=newV(),last={b1:0,b2:0},dirty=0;
+const dim=()=>new Date(S.y,S.m+1,0).getDate();
+const isHol=i=>S.rows[i].h??new Date(S.y,S.m,i+1).getDay()===0;
+const fmt=g=>g==null?{t:'',u:''}:g>=1000?{t:+(g/1000).toFixed(3)+'',u:'kg'}:{t:g+'',u:'g'};
+function parseYM(s){s=s.trim();let m,y,x;
+ if(x=s.match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/)){if(+x[1]<1||+x[1]>31)return;m=+x[2];y=+x[3]}
+ else if(x=s.match(/^(\d{1,2})[\/.\-](\d{4})$/)){m=+x[1];y=+x[2]}
+ else if(x=s.match(/^(\D+?)[\s,\-]*(\d{4})$/)){const n=x[1].replace(/़/g,'').toLowerCase();m=MN.findIndex(a=>a.some(p=>n.startsWith(p)))+1;y=+x[2]}
+ else return;
+ if(m>=1&&m<=12&&y>=2000&&y<=2100)return[y,m-1]}
+function calc(k){PAIRS.forEach(([b,c,o])=>{if(k==b||k==c){const x=parseFloat(V[b]),y=parseFloat(V[c]);V[o]=isNaN(x*y)?'':(x*y).toFixed(2)}})}
+const why=i=>S.rows[i].rs??(new Date(S.y,S.m,i+1).getDay()===0?'SUNDAY':'');
+
+function render(sk){
+ const a=sk===undefined?document.activeElement:sk,D=dim(),set=(e,v)=>{if(e!==a&&e.value!==v)e.value=v};
+ const sum={},cnt={};KEYS.forEach(k=>sum[k]=cnt[k]=0);
+ S.rows.forEach((r,i)=>{
+  const tr=TR[i],ok=i<D,hol=ok&&isHol(i),live=ok&&!hol;
+  tr.classList.toggle('hol',hol);tr.classList.toggle('dis',!ok);
+  const di=$('[data-k=d]',tr);di.readOnly=!ok;set(di,ok?fd(new Date(S.y,S.m,i+1)):'');
+  const ri=$('[data-k=rs]',tr);ri.readOnly=!hol;set(ri,hol?why(i):'');
+  KEYS.forEach(k=>{const inp=$(`[data-k=${k}]`,tr),u=inp.nextElementSibling,it=k[0]!='b',on=!it||r.on[k];
+   if(it)inp.parentNode.classList.toggle('off',live&&!on);
+   inp.readOnly=it||!live;
+   if(!live||!on){set(inp,'');if(u)u.textContent='';return}
+   const g=it&&r['b'+k[1]]!==''?+r['b'+k[1]]*GRAMS[k]:null;
+   if(it){const f=fmt(g);set(inp,f.t);u.textContent=f.u}else set(inp,r[k]);
+   const v=it?g||0:+r[k]||0;sum[k]+=v;if(v>0)cnt[k]++;
+  })});
+ KEYS.forEach(k=>{const it=k[0]!='b',s=$(`[data-s=${k}]`),f=it?fmt(sum[k]||null):{t:sum[k]?''+sum[k]:'',u:''};
+  s.value=f.t;s.nextElementSibling.textContent=f.u;$(`[data-n=${k}]`).value=cnt[k]||''});
+ [['a1','a4','b1'],['a7','a10','b2']].forEach(([x,m,y])=>{if(sum[y]!==last[y]){last[y]=sum[y];V[x]=V[m]=sum[y]?''+sum[y]:'';calc(x);calc(m)}});
+ derive(sum);for(const k in V)set(PE[k],V[k]);
+ for(let i=1;i<=5;i++){const x=PE['s4a'+i],l=x.value.replace(/\D/g,'').length;x.classList.toggle('bad',l>0&&l<12&&x!==a)}
+ ['top','mon'].forEach(id=>{const w=$('#'+id),m=$('[data-my=m]',w),y=$('[data-my=y]',w);
+  if(![...y.options].some(o=>o.value==S.y))y.add(new Option(S.y,S.y));m.value=S.m;y.value=S.y});$('#kd').textContent=`1/${S.m+1}/${S.y}`;fit();tabs();
+}
+const fx=x=>''+ +x.toFixed(3);
+const CV=document.createElement('canvas').getContext('2d');let FIT;
+function fit(){FIT=FIT||[...document.querySelectorAll('.i input')];
+ FIT.forEach(i=>i.style.fontSize='');
+ const J=[];FIT.forEach(i=>{const w=i.clientWidth;if(!w||!i.value)return;
+  const c=getComputedStyle(i),f=parseFloat(c.fontSize),a=w-parseFloat(c.paddingLeft)-parseFloat(c.paddingRight);
+  CV.font=`${c.fontWeight} ${f}px ${c.fontFamily}`;const t=CV.measureText(i.value).width;
+  if(a>0&&t>a)J.push([i,Math.max(f*a/t*.97,4.5)])});
+ J.forEach(([i,s])=>i.style.fontSize=s+'px')}
+function derive(sum){
+ const n=k=>parseFloat(V[k])||0,e=k=>V[k]!=='',kg=g=>g?fx(g/1000):'',G=['g1','g2','g3','g4'],Q=['p1','p2'],map={g1:'w1',g2:'r1',g3:'w2',g4:'r2',p1:'m1',p2:'m2'},C=[3,4,5,6,7];
+ [...G,...Q].forEach(r=>{V[r+'_10']=kg(sum[map[r]]); /* spent this month = table सर्वयोग */
+  const h8=C.some(c=>e(r+'_'+c)),h11=e(r+'_9')||e(r+'_10');
+  V[r+'_8']=h8?fx(C.reduce((s,c)=>s+n(r+'_'+c),0)):'';
+  V[r+'_11']=h11?fx(n(r+'_9')+n(r+'_10')):'';
+  V[r+'_12']=h8||h11?fx(n(r+'_8')-n(r+'_11')):''});
+ [['gt',G],['pt',Q]].forEach(([t,rs])=>{for(let c=3;c<=12;c++)V[t+'_'+c]=rs.some(r=>e(r+'_'+c))?fx(rs.reduce((s,r)=>s+n(r+'_'+c),0)):''});
+ ['1','2'].forEach(g=>{const ks=['sc','st','ot'].map(c=>`s3_${g}_${c}`);V[`s3_${g}_t`]=ks.some(e)?''+ks.reduce((s,k)=>s+n(k),0):''});
+ const nm=[1,2,3,4,5].filter(i=>V['s4n'+i].trim()),ct={SC:0,ST:0,OTHER:0};
+ nm.forEach(i=>{const c=V['s4c'+i];if(c)ct[c=='OBC'?'OTHER':c]++});
+ V.s3_ck_sc=''+(ct.SC||'');V.s3_ck_st=''+(ct.ST||'');V.s3_ck_ot=''+(ct.OTHER||'');
+ V.a13=nm.length?''+nm.length:'';V.k2=V.a13;calc('a13');
+ const s=n('a3')+n('a6')+n('a9')+n('a12')+n('a15')+n('a16')+(nm.length?n('c17'):0);V.a18=s?s.toFixed(2):'';
+ V.s6_t=e('s6_s')||e('s6_p')?(n('s6_s')+n('s6_p')).toFixed(2):'';
+ [['k3',G.reduce((x,r)=>x+Math.max(0,n(r+'_7')),0)],['k6w',n('g1_6')+n('g3_6')],['k6r',n('g2_6')+n('g4_6')]].forEach(([k,v])=>{if(last[k]!==v){last[k]=v;V[k]=v?fx(v):''}});
+ if(last.mob!==$('#mob').value)last.mob=V.pm=$('#mob').value;
+}
+/* Tab order in the main table: down the 1-5 column (holiday rows: their reason cell), then down the 6-8 column. Dates are click-only. */
+function seq(){const D=dim(),a=[],b=[];
+ TR.forEach((tr,i)=>{if(i>=D)return;const h=isHol(i);
+  a.push($(h?'[data-k=rs]':'[data-k=b1]',tr));if(!h)b.push($('[data-k=b2]',tr))});
+ return[...a,...b]}
+let TI;
+function tabs(){TI=TI||[...document.querySelectorAll('tr[data-i] input')];TI.forEach(i=>i.tabIndex=-1);const q=seq()[0];if(q)q.tabIndex=0}
+function resetAll(){RC.hidden=false;lock(1);$('#rcn').focus()}
+
+/* ---------- events ---------- */
+const app=document.getElementById('app');
+app.addEventListener('input',e=>{const t=e.target,tr=t.closest('tr[data-i]'),d=t.dataset;
+ if(t.classList.contains('sv')||d.n!==undefined&&!d.k&&!d.s){
+  if(d.n!==undefined)t.value=t.value.replace(/\D/g,'');if(d.u!==undefined)t.value=t.value.toUpperCase();
+  if(t.classList.contains('sv')){M[t.id]=t.value;try{localStorage[STORE]=JSON.stringify(M)}catch{}}render();return}
+ if(d.p){if(d.dg!==undefined)t.value=t.value.replace(/\D/g,'');if(d.dc!==undefined)t.value=t.value.replace(/[^\d.\-]/g,'').replace(/(?!^)-/g,'').replace(/(\..*)\./g,'$1');if(d.aad!==undefined)t.value=t.value.replace(/\D/g,'').slice(0,12).replace(/(\d{4})(?=\d)/g,'$1-');V[d.p]=t.value;calc(d.p);if(SAVEP.test(d.p)){M[d.p]=t.value;try{localStorage[STORE]=JSON.stringify(M)}catch{}}}
+ else if(tr&&d.k=='rs')S.rows[+tr.dataset.i].rs=t.value;
+ else if(tr&&d.k&&d.k[0]=='b')S.rows[+tr.dataset.i][d.k]=t.value=t.value.replace(/\D/g,'');
+ else return;
+ dirty=SAVEP.test(d.p||'')?dirty:1;render()});
+app.addEventListener('focusout',e=>{const t=e.target;
+ if(t.dataset.ym!==undefined){const p=parseYM(t.value);
+  if(p&&(p[0]!=S.y||p[1]!=S.m)){S.y=p[0];S.m=p[1];S.rows.forEach(r=>{r.h=null;r.rs=null});dirty=1}}
+ if(t.dataset.dt!==undefined){const x=t.value.trim().match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/);let v='';
+  if(x){const D=new Date(+x[3],x[2]-1,+x[1]);if(D.getDate()==+x[1]&&D.getMonth()==x[2]-1)v=fd(D)}V[t.dataset.p]=v}
+ if(t.matches('input,textarea'))render(null)});
+app.addEventListener('change',e=>{const t=e.target;if(t.dataset.my===undefined)return;
+ const w=t.parentNode,m=+$('[data-my=m]',w).value,y=+$('[data-my=y]',w).value;
+ if(m!=S.m||y!=S.y){S.m=m;S.y=y;S.rows.forEach(r=>{r.h=null;r.rs=null});dirty=1}render(null)});
+app.addEventListener('focusin',e=>{const t=e.target; /* keyboard focus only, so mouse clicks keep native behaviour */
+ if(t.tagName=='SELECT'&&t.matches(':focus-visible')){try{t.showPicker()}catch{}}});
+app.addEventListener('keydown',e=>{const t=e.target;
+ if(e.key=='Enter'&&t.matches('input,textarea')){e.preventDefault();t.blur()}
+ else if(e.key=='Tab'&&!e.altKey&&!e.ctrlKey&&t.closest('tr[data-i]')){const Q=seq(),i=Q.indexOf(t),n=i+(e.shiftKey?-1:1);
+  if(i>=0&&Q[n]){e.preventDefault();Q[n].focus();Q[n].select()}}});
+app.addEventListener('click',e=>{const sn=e.target.closest('.sn'),tg=e.target.closest('.it');
+ if(sn){const i=+sn.parentNode.dataset.i;if(i<dim()){S.rows[i].h=!isHol(i);dirty=1;render(null)}}
+ if(tg){const tr=tg.closest('tr'),r=S.rows[+tr.dataset.i],k=tg.dataset.t;
+  if(!tr.matches('.dis,.hol')){r.on[k]=!r.on[k];if(k[1]=='1')r.on[k[0]+'2']=r.on[k];dirty=1;render(null)}}
+ if(e.target.matches('[data-p=a13]')){const c=[1,2,3,4,5].map(i=>PE['s4n'+i].parentNode);
+  c.forEach(x=>{x.classList.remove('blink');void x.offsetWidth;x.classList.add('blink')});c[0].scrollIntoView({block:'center',behavior:'smooth'})}});
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+
+/* ---------- user guide / print help ---------- */
+const MOB={
+hi:`<b>📱 Android फ़ोन पर PDF कैसे सेव करें</b><br>1️⃣ <b>🖨 Print / PDF</b> दबाएँ।<br>2️⃣ प्रिंट स्क्रीन पर ऊपर मेनू ढूँढें: <b>☰</b> (तीन लाइनें) या <b>⋮</b> (तीन बिंदु) या <b>▾</b> प्रिंटर सूची।<br>3️⃣ <b>📄 “Save as PDF”</b> चुनें। यह विकल्प अक्सर इसी मेनू में छिपा होता है।<br>4️⃣ फिर <b>⬇ PDF / Save</b> बटन दबाकर फ़ाइल सेव करें।<br>⚙️ पेपर <b>A4</b> · मार्जिन <b>None</b> · स्केल <b>100%</b> रखें।`,
+en:`<b>📱 How to save as PDF on an Android phone</b><br>1️⃣ Tap <b>🖨 Print / PDF</b>.<br>2️⃣ On the print screen, look for the menu at the top: <b>☰</b> (three lines), <b>⋮</b> (three dots) or the <b>▾</b> printer list.<br>3️⃣ Choose <b>📄 “Save as PDF”</b>. This option is often hidden inside that menu.<br>4️⃣ Then tap the <b>⬇ PDF / Save</b> button to save the file.<br>⚙️ Keep paper <b>A4</b> · margins <b>None</b> · scale <b>100%</b>.`};
+document.querySelectorAll('.mob').forEach(e=>e.innerHTML=MOB[e.classList.contains('hi')?'hi':'en']);
+const MOBW={ /* short reminder shown before printing on phones */
+hi:`<b>📱 मोबाइल पर, प्रिंट स्क्रीन खुलने के बाद:</b><br>1️⃣ ऊपर <b>☰</b> या <b>⋮</b> मेनू (या <b>▾</b> प्रिंटर सूची) खोलें।<br>2️⃣ <b>📄 “Save as PDF”</b> चुनें।`,
+en:`<b>📱 On mobile, once the print screen opens:</b><br>1️⃣ Open the <b>☰</b> or <b>⋮</b> menu (or the <b>▾</b> printer list) at the top.<br>2️⃣ Choose <b>📄 “Save as PDF”</b>.`};
+document.querySelectorAll('#pw .mob').forEach(e=>e.innerHTML=MOBW[e.classList.contains('hi')?'hi':'en']);
+document.querySelectorAll('.lgs').forEach(e=>e.innerHTML='<button class="lg" data-set="hi">हिंदी</button><button class="lg" data-set="en">English</button>');
+document.addEventListener('click',e=>{const b=e.target.closest('.lg');if(b)document.body.dataset.lang=b.dataset.set});
+const GD=$('#guide'),PW=$('#pw');let GF;
+if(WALKTHROUGH_URL){$('#gv').href=WALKTHROUGH_URL;$('#gv').classList.remove('off')}
+const lock=v=>document.body.style.overflow=v?'hidden':'';
+function openGuide(){GF=document.activeElement;GD.hidden=false;lock(1);document.querySelectorAll('.gbody').forEach(b=>b.scrollTop=0);$('#gx').focus()}
+function closeGuide(){GD.hidden=true;lock(0);if(GF&&GF.focus)GF.focus()}
+function closePW(){PW.hidden=true;lock(0)}
+function doPrint(){if(matchMedia('(pointer:coarse)').matches){PW.hidden=false;lock(1)}else print()}
+$('#gx').onclick=closeGuide;$('#px').onclick=closePW;
+$('#pgo').onclick=()=>{closePW();setTimeout(print,100)};
+GD.addEventListener('click',e=>{if(e.target===GD)closeGuide()});
+PW.addEventListener('click',e=>{if(e.target===PW)closePW()});
+addEventListener('keydown',e=>{if(e.key=='Escape'){if(!GD.hidden)closeGuide();if(!PW.hidden)closePW();if(!RI.hidden)closeRI();if(!RC.hidden)closeRC()}});
+const RI=$('#ri'),RC=$('#rc');
+function closeRC(){RC.hidden=true;lock(0)}
+function doReset(){closeRC();S.rows=newRows();V=newV();for(const k in V)if(SAVEP.test(k)&&M[k])V[k]=M[k];last={b1:0,b2:0};dirty=0;render(null)}
+$('#rcn').onclick=closeRC;$('#rcy').onclick=doReset;RC.addEventListener('click',e=>{if(e.target===RC)closeRC()});
+document.querySelectorAll('.rd').forEach(e=>e.textContent=RATES_UPDATED);
+if(RATES_URL)document.querySelectorAll('.ru').forEach(e=>{e.href=RATES_URL;e.textContent=RATES_URL});else document.querySelectorAll('.rurl').forEach(e=>e.remove());
+function openRI(){RI.hidden=false;lock(1)}function closeRI(){RI.hidden=true;lock(0)}
+$('#rx').onclick=closeRI;RI.addEventListener('click',e=>{if(e.target===RI)closeRI()});
+/* ---------- saved school details ---------- */
+let M={};try{M=JSON.parse(localStorage[STORE]||'{}')}catch{}
+document.querySelectorAll('.sv').forEach(e=>{if(M[e.id])e.value=M[e.id]});
+for(const k in V)if(SAVEP.test(k)&&M[k])V[k]=M[k];
+const indent=()=>document.querySelectorAll('.v').forEach(c=>c.querySelector('textarea').style.textIndent=c.querySelector('span').offsetWidth+4+'px');
+indent();document.fonts&&document.fonts.ready.then(()=>{indent();render(null)});
+render(null);
+/* ---------- usage analytics (Microsoft Clarity) ----------
+   Personal fields (school/bank/phone details, cook names, Aadhaar) are masked in recordings.
+   Saved details are NEVER sent to Clarity as tags. */
+if(CLARITY_ID){
+ document.querySelectorAll('.sv,[data-p^=s4],[data-p=pm]').forEach(e=>e.setAttribute('data-clarity-mask','True'));
+ (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script",CLARITY_ID);
+ try{let d=localStorage.getItem('_app_device_id');if(!d){d='dev_'+Math.random().toString(36).slice(2,11)+'_'+Date.now();localStorage.setItem('_app_device_id',d)}
+  clarity('identify',d);clarity('set','device_id',d)}catch{}
+}
+/* ---------- opt-in contact sharing for support (Clarity tags). Nothing is sent unless the user taps Yes. ---------- */
+const SH=$('#shb');
+function shareOn(){try{return localStorage.getItem('_share_ok')==='1'}catch{return false}}
+function sendTags(){if(!CLARITY_ID||!shareOn()||!window.clarity)return;
+ for(const id in SHARE_TAGS){const v=($('#'+id).value||'').trim();if(v)clarity('set',SHARE_TAGS[id],v.slice(0,250))}}
+function setShare(on){try{localStorage.setItem('_share_ok',on?'1':'0')}catch{}document.body.dataset.share=on?'on':'off';if(!SH.hidden){SH.hidden=true;lock(0)}if(on)sendTags()}
+if(CLARITY_ID){
+ document.body.dataset.share=shareOn()?'on':'off';
+ let a=null;try{a=localStorage.getItem('_share_ok')}catch{}if(a===null){SH.hidden=false;lock(1);$('#shy').focus()}
+ $('#shy').onclick=()=>setShare(true);$('#shn').onclick=()=>setShare(false);
+ document.addEventListener('click',e=>{if(e.target.closest('.shr'))setShare(!shareOn())});
+ app.addEventListener('change',e=>{if(SHARE_TAGS[e.target.id])sendTags()});
+ sendTags();
+}else document.querySelectorAll('.shsec').forEach(e=>e.remove());
+</script></body></html>
