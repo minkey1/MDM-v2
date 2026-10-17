@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=830" />
-    <title>मिड डे मील योजना का मासिक उपयोगिता प्रमाण पत्र</title>
+    <title>MDM Form</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap"
       rel="stylesheet"
@@ -693,8 +693,7 @@
             <p>
               आप चाहें तो अपने स्कूल का नाम, ग्राम पंचायत, ब्लॉक, संस्था प्रधान
               का नंबर और WhatsApp नंबर डेवलपर के साथ साझा कर सकते हैं, ताकि कोई
-              दिक्कत होने पर वे आपसे संपर्क कर सकें। आधार, बैंक या अन्य जानकारी
-              कभी नहीं भेजी जाती। बंद करने पर आगे कुछ नहीं भेजा जाएगा।
+              दिक्कत होने पर वे आपसे संपर्क कर सकें। बंद करने पर आगे कुछ नहीं भेजा जाएगा।
             </p>
             <button class="shr">
               <span class="sh-on">✅ चालू है — बंद करें</span
@@ -821,8 +820,7 @@
               If you like, you can share your school name, gram panchayat,
               block, head/in-charge number and WhatsApp number with the
               developer so they can contact you if something goes wrong.
-              Aadhaar, bank and other details are never sent. Turning it off
-              stops anything further from being sent.
+              Turning it off stops anything further from being sent.
             </p>
             <button class="shr">
               <span class="sh-on">✅ On — turn off</span
@@ -885,7 +883,7 @@
         </div>
         <div class="gbody">
           <p class="hi">
-            🤝 क्या आप चाहते हैं कि डेवलपर ज़रूरत पड़ने पर आपकी मदद कर सके?
+            🤝  यह टूल अभी भी बन रहा है | क्या आप चाहते हैं कि डेवलपर ज़रूरत पड़ने पर आपकी मदद कर सके?
             “हाँ” दबाने पर आपके स्कूल का नाम, ग्राम पंचायत, ब्लॉक, संस्था प्रधान
             का नंबर और WhatsApp नंबर डेवलपर तक (Microsoft Clarity के ज़रिए)
             पहुँचेंगे, ताकि कोई दिक्कत होने पर वे आपसे संपर्क कर सकें। आधार,
@@ -893,12 +891,11 @@
             सकते हैं।
           </p>
           <p class="en">
-            🤝 Want the developer to be able to help you if something goes
+            🤝 This tool is still in development. Want the developer to be able to help you if something goes
             wrong? If you tap “Yes”, your school name, gram panchayat, block,
             head/in-charge number and WhatsApp number are shared with the
             developer (through Microsoft Clarity) so they can contact you.
-            Aadhaar, bank and other details are never sent. You can change this
-            later in the guide.
+            You can change this later in the guide.
           </p>
         </div>
         <div class="gfoot">
@@ -942,6 +939,17 @@
     </div>
     <main id="app"></main>
     <script>
+
+
+
+
+
+
+
+
+
+
+
       /* ============ CONFIG — dev edits here ============ */
       const RATES = {
         c2: 6.78,
@@ -968,6 +976,17 @@
       const STORE = "mdm_uc_meta_v1";
       const SAVEP = /^s4[ncay]\d$/; // page-2 fields remembered on this device: cook-cum-helper name / category / Aadhaar / Chiranjeevi card
       /* ================================================= */
+      
+
+
+
+
+
+
+
+
+
+      
       const $ = (s, r = document) => r.querySelector(s),
         KEYS = ["b1", "w1", "r1", "m1", "b2", "w2", "r2", "m2"];
       const HI = [
